@@ -1,0 +1,61 @@
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'eclipse'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    configurations {
+        provided
+        compile.extendsFrom provided
+        deployerJars
+    }
+
+    group 'com.feixue'
+    version '1.0-SNAPSHOT'
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                configuration = configurations.deployerJars
+                snapshotRepository(url: "http://192.168.10.227:8081/repository/maven-snapshots/") {
+//					authentication(userName: "$mavenUser", password: "$mavenPass")
+                }
+                repository(url:"http://192.168.10.227:8081/repository/maven-releases/") {
+//					authentication(userName: "$mavenUser", password: "$mavenPass")
+                }
+            }
+        }
+    }
+
+    dependencies {
+        deployerJars "org.apache.maven.wagon:wagon-http:3.1.0"
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    idea {
+        module {
+            downloadSources=true
+            downloadJavadoc=true
+        }
+    }
+
+    sourceCompatibility = 1.8
+
+    dependencies {
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+        provided group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+        compile group: 'com.google.guava', name: 'guava', version: '24.1-jre'
+        compile group: 'commons-io', name: 'commons-io', version: '2.6'
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+        compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+        compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+        compile('com.alibaba:fastjson:1.2.47')
+    }
+}

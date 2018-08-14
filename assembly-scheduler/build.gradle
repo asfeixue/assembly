@@ -1,0 +1,16 @@
+dependencies {
+    compile('org.quartz-scheduler:quartz:2.3.0') {
+        exclude group: 'c3p0', module: 'c3p0'
+    }
+
+    provided("org.springframework:spring-context-support:3.2.18.RELEASE")
+
+    compile(group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.12') {
+        exclude group: 'log4j', module: 'log4j'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    compile('org.apache.curator:curator-recipes:4.0.1') {
+        exclude group: 'org.apache.zookeeper', module: 'zookeeper'
+    }
+}
