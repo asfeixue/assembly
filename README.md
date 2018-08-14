@@ -30,14 +30,18 @@
 ### 类型处理
 将tinyint(1)处理成Boolean，而不是Byte。方便使用。
 
-    <javaModelGenerator targetPackage="com.mc.knock.domain.generator" targetProject="src/main/java">
-        <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
-        <property name="enableSubPackages" value="true"/>
-        <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
-        <property name="trimStrings" value="true"/>
-        <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
-        <property name="immutable" value="false"/>
-    </javaModelGenerator>
+    <javaTypeResolver type="com.feixue.assembly.mybatis.JavaTypeResolverExtendImpl">
+        <!--
+            true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型
+            false：默认,
+                scale>0;length>18：使用BigDecimal;
+                scale=0;length[10,18]：使用Long；
+                scale=0;length[5,9]：使用Integer；
+                scale=0;length<5：使用Short；
+         -->
+        <property name="forceBigDecimals" value="false"/>
+        <property name="tinyint2Boolean" value="true"/>
+    </javaTypeResolver>
 ## 调度
 ### 简单调度
 基于线程池机制，将任务调度编程化处理。支持调度周期性任务，一次性任务。
