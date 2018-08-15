@@ -11,7 +11,13 @@
 ### 分页插件
     <plugin type="com.feixue.assembly.mybatis.MysqlLimitPlugin"></plugin>
 ### 插入忽略插件
+基于唯一键冲突原理，insert ignore的语法实现。
+
     <plugin type="com.feixue.assembly.mybatis.InsertIgnorePlugin"></plugin>
+### 悲观锁插件
+基于select for update的语法实现。
+
+    <plugin type="com.feixue.assembly.mybatis.SelectForUpdatePlugin"></plugin>
 ### 文档插件
 数据库表映射JavaBean实体，同时将comment处理成字段注释文档
 

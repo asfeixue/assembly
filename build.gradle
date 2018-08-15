@@ -17,20 +17,6 @@ allprojects {
     group 'com.feixue'
     version '1.0-SNAPSHOT'
 
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                configuration = configurations.deployerJars
-                snapshotRepository(url: "http://192.168.10.227:8081/repository/maven-snapshots/") {
-//					authentication(userName: "$mavenUser", password: "$mavenPass")
-                }
-                repository(url:"http://192.168.10.227:8081/repository/maven-releases/") {
-//					authentication(userName: "$mavenUser", password: "$mavenPass")
-                }
-            }
-        }
-    }
-
     dependencies {
         deployerJars "org.apache.maven.wagon:wagon-http:3.1.0"
     }

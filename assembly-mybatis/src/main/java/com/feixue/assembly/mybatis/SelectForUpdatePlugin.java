@@ -10,6 +10,9 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 public class SelectForUpdatePlugin extends BasePlugin {
@@ -29,12 +32,29 @@ public class SelectForUpdatePlugin extends BasePlugin {
     @Override
     public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
         // 方法生成 selectForUpdateByExample
-        Method selectForUpdateMethod = JavaElementGeneratorTools.generateMethod(
-                METHOD_SELECT_FORUPDATE_BY_EXAMPLE_WITH_BLOBS,
-                JavaVisibility.DEFAULT,
-                JavaElementGeneratorTools.getModelTypeWithBLOBs(introspectedTable),
-                new Parameter(new FullyQualifiedJavaType(introspectedTable.getExampleType()), "example")
-        );
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
+        importedTypes.add(type);
+        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
+
+        Method selectForUpdateMethod = new Method();
+        selectForUpdateMethod.setVisibility(JavaVisibility.PUBLIC);
+
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
+        FullyQualifiedJavaType listType;
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            listType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
+        } else {
+            // the blob fields must be rolled up into the base class
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        }
+
+        importedTypes.add(listType);
+        returnType.addTypeArgument(listType);
+        selectForUpdateMethod.setReturnType(returnType);
+        selectForUpdateMethod.setName(METHOD_SELECT_FORUPDATE_BY_EXAMPLE_WITH_BLOBS);
+        selectForUpdateMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getExampleType()), "example"));
 
         FormatTools.addMethodWithBestPosition(interfaze, selectForUpdateMethod);
 
@@ -44,12 +64,29 @@ public class SelectForUpdatePlugin extends BasePlugin {
     @Override
     public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
         // 方法生成 selectForUpdateByExample
-        Method selectForUpdateMethod = JavaElementGeneratorTools.generateMethod(
-                METHOD_SELECT_FORUPDATE_BY_EXAMPLE,
-                JavaVisibility.DEFAULT,
-                JavaElementGeneratorTools.getModelTypeWithoutBLOBs(introspectedTable),
-                new Parameter(new FullyQualifiedJavaType(introspectedTable.getExampleType()), "example")
-        );
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
+        importedTypes.add(type);
+        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
+
+        Method selectForUpdateMethod = new Method();
+        selectForUpdateMethod.setVisibility(JavaVisibility.PUBLIC);
+
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
+        FullyQualifiedJavaType listType;
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            listType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
+        } else {
+            // the blob fields must be rolled up into the base class
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        }
+
+        importedTypes.add(listType);
+        returnType.addTypeArgument(listType);
+        selectForUpdateMethod.setReturnType(returnType);
+        selectForUpdateMethod.setName(METHOD_SELECT_FORUPDATE_BY_EXAMPLE);
+        selectForUpdateMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getExampleType()), "example"));
 
         FormatTools.addMethodWithBestPosition(interfaze, selectForUpdateMethod);
 
