@@ -267,8 +267,6 @@ public class SelectForUpdatePlugin extends BasePlugin {
         }
 
         selectForUpdateWithBLOBsElement.addElement(XmlElementGeneratorTools.getBaseColumnListElement(introspectedTable));
-        selectForUpdateWithBLOBsElement.addElement(new TextElement(","));
-        selectForUpdateWithBLOBsElement.addElement(XmlElementGeneratorTools.getBlobColumnListElement(introspectedTable));
 
         sb.setLength(0);
         sb.append("from ");
