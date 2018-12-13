@@ -27,14 +27,14 @@ public class GeneratorGlobalJSONFormat extends PluginAdapter {
         String jsonType =  properties.getProperty("jsonType");
         String datePattern = properties.getProperty("datePattern");
         if(null != datePattern) {
-            String prefix = "@JsonFormat(pattern = ";
+            String prefix = "@JsonFormat(timezone = \"GMT+8\", pattern = ";
 
             if(null == jsonType) {
                 jsonType = "com.fasterxml.jackson.annotation.JsonFormat";
-                prefix = "@JsonFormat(pattern = ";
+                prefix = "@JsonFormat(timezone = \"GMT+8\", pattern = ";
             } else if ("jackson".equalsIgnoreCase(jsonType)) {
                 jsonType = "com.fasterxml.jackson.annotation.JsonFormat";
-                prefix = "@JsonFormat(pattern = ";
+                prefix = "@JsonFormat(timezone = \"GMT+8\", pattern = ";
             } else if ("fastjson".equalsIgnoreCase(jsonType)) {
                 jsonType = "com.alibaba.fastjson.annotation.JSONField";
                 prefix = "@JSONField(format = ";

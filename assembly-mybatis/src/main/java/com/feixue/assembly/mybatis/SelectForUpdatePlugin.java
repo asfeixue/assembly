@@ -93,6 +93,8 @@ public class SelectForUpdatePlugin extends BasePlugin {
         selectForUpdateMethod.setName(METHOD_SELECT_FORUPDATE_BY_EXAMPLE);
         selectForUpdateMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getExampleType()), "example"));
 
+        interfaze.addImportedTypes(importedTypes);
+
         FormatTools.addMethodWithBestPosition(interfaze, selectForUpdateMethod);
 
         return super.clientSelectByExampleWithoutBLOBsMethodGenerated(selectForUpdateMethod, interfaze, introspectedTable);
