@@ -236,6 +236,11 @@ public class ProtocolBuilder {
                 throw new IllegalArgumentException("protocol post method must set encode!");
             }
         }
+        Protocol.ProtocolRequest request = protocol.getRequest();
+        if (request == null) {
+            request = new Protocol.ProtocolRequest();
+            protocol.setRequest(request);
+        }
         return protocol;
     }
 
