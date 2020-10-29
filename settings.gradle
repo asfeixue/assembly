@@ -2,4 +2,5 @@ rootProject.name = 'assembly'
 include 'assembly-mybatis'
 include 'assembly-http'
 include 'assembly-scheduler'
+include 'assembly-synchronizer'
 
